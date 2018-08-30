@@ -1,0 +1,4 @@
+[local]
+localhost ansible_connection=local ansible_python_interpreter=python
+[webserver]
+ec2-18-223-7-202.us-east-2.compute.amazonaws.com ansible_user=ubuntu

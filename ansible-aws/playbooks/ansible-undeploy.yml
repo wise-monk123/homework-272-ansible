@@ -1,0 +1,28 @@
+- name: Start provisional
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    instance_id: i-05c0a508f2be427fb
+    region: us-east-2
+    access_key: AKIAINBK3HBVLWZMPVVA
+    secret_key: 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
+  tasks:
+    - name: Start ec2 instances
+      ec2:
+        instance_ids: "{{ instance_id }}"
+        region: "{{ region }}"
+        state: running
+        wait: True
+        vpc_subnet_id: subnet-6e857e22
+        assign_public_ip: yes
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+- hosts: webserver
+  remote_user: ubuntu
+  become: yes
+  gather_facts: yes
+  tasks:
+   - service: 
+       name: apache2
+       state: stopped

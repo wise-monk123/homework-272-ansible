@@ -1,0 +1,52 @@
+- name: Create AWS resources
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  vars:
+    instance_type: t2.micro
+    security_group: webservers_group
+    image: ami-0552e3455b9bc8d50
+    keypair: id_rsa
+    region: us-east-2
+    access_key: AKIAINBK3HBVLWZMPVVA
+    secret_key: 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
+    count: 1
+  tasks:
+    - name: Create a security group
+      ec2_group:
+        name: "{{ security_group }}"
+        description: The webservers security group
+        region: "{{ region }}"
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 443
+            to_port: 443
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+            
+    - name: Launch the new EC2 Instance
+      ec2:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        group: "{{ security_group }}"
+        instance_type: "{{ instance_type }}"
+        image: "{{ image }}"
+        wait: true 
+        region: "{{ region }}"
+        keypair: "{{ keypair }}"
+        count: "{{count}}"
+      register: ec2
+      
+
