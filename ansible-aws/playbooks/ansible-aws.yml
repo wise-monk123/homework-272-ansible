@@ -8,8 +8,8 @@
     image: ami-0552e3455b9bc8d50
     keypair: id_rsa
     region: us-east-2
-    access_key: AKIAINBK3HBVLWZMPVVA
-    secret_key: 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
+    access_key: 
+    secret_key: 
     count: 1
   tasks:
     - name: Create a security group
