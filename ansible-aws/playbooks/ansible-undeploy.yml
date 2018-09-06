@@ -5,8 +5,8 @@
   vars:
     instance_id: i-05c0a508f2be427fb
     region: us-east-2
-    access_key: AKIAINBK3HBVLWZMPVVA
-    secret_key: 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
+    access_key: 
+    secret_key: 
   tasks:
     - name: Start ec2 instances
       ec2:
